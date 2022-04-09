@@ -1,0 +1,47 @@
+package people;
+import java.util.Scanner;
+public class Student {
+	private String	degreeprogram;
+	private String standing;
+	private int expectedGraduationYear;
+
+	public String getDegreeProgram() {
+		return this.degreeprogram;
+	}
+
+	public void setDegreeProgram(String degreeprogram) {
+		this.degreeprogram = degreeprogram;
+	}
+
+	public String getStanding() {
+		return this.standing;
+	}
+
+	public void setStanding(String standing) {
+		this.standing = standing;
+	}
+
+	public int getExpectedGraduationYear() {
+		return expectedGraduationYear;
+	}
+
+	public void setExpectedGraduationYear(int expectedGraduationYear) {
+
+		this.expectedGraduationYear = expectedGraduationYear;
+	}
+
+	public Student() {
+		super();
+		this.standing=null;
+		this.degreeprogram= null;
+		this.expectedGraduationYear=0;
+	}
+
+	public Student(String codeID, String firstName, String middleName,String familyName, Date dayOfBirth, String homePhoneNumber,
+			String cellPhoneNumber,String degreeprogram, String standing, int expectedGraduationYear) {
+		super(codeID, firstName,middleName,familyName, dayOfBirth, homePhoneNumber, cellPhoneNumber);
+		this.degreeprogram = degreeprogram;
+		this.standing = standing;
+		this.expectedGraduationYear = expectedGraduationYear;
+	}
+}

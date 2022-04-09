@@ -1,0 +1,694 @@
+package swing;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controller.ArrayOfPeople;
+import processfile.ReadFile;
+import processfile.WriteFile;
+import people.Date;
+import people.People;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.awt.event.ActionEvent;
+
+public class InputProfessor extends JFrame implements MouseListener,ActionListener {
+
+	private JPanel contentPane;
+	private JLabel lbProfess,lbID,lbFName,lbMiddleName,lbDate,lbDay,lbMonth,lbYear,lbRank,
+	lbDepartment,lbOfficeNumber,lbOfficePhone;
+	private JTextField txtID,txtFirstName,txtMiddleName,txtDay, txtMonth, txtYear,txtDepartment,txtOfficeNumber,txtOfficePhone;
+	private JButton bSave, bFinish,bReset;
+	private JPanel pButton, panel;
+	private JLabel lbHomePhone;
+	private JLabel lbCellPhone;
+	private JTextField txtCellPhone;
+	private JTextField txtHomePhone;
+	static String name;
+	private JComboBox comboBox;
+	private JLabel lblFamilyName;
+	private JTextField txtFamilyNam;
+	
+	public static void main(String[] args) {
+		InputProfessor frame = new InputProfessor(name);
+		frame.setVisible(true);
+	}
+	public InputProfessor(String namef) {
+		name=namef;
+		super.setTitle("welcome to Professor ");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 750, 607);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		lbProfess = new JLabel("Welcome to Professor");
+		lbProfess.setBounds(232, 0, 234, 42);
+		lbProfess.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		contentPane.add(lbProfess);
+		
+		bSave = new JButton("Save");
+		bSave.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bSave.setBounds(29, 28, 92, 31);
+		
+		bFinish = new JButton("Finsh");
+		bFinish.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bFinish.setBounds(470, 28, 84, 31);
+		
+		pButton = new JPanel();
+		pButton.setBounds(60, 501, 589, 69);
+		pButton.setLayout(null);
+		pButton.add(bSave);
+		pButton.add(bFinish);
+		contentPane.add(pButton);
+		
+		bReset = new JButton("Reset");
+		bReset.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		bReset.setBounds(255, 28, 92, 31);
+		pButton.add(bReset);
+		
+		panel = new JPanel();
+		panel.setBounds(10, 35, 699, 460);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		lbID = new JLabel("CodeID");
+		lbID.setBounds(36, 10, 94, 28);
+		panel.add(lbID);
+		lbID.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbFName = new JLabel("First Name");
+		lbFName.setBounds(36, 60, 94, 28);
+		panel.add(lbFName);
+		lbFName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbMiddleName = new JLabel("Middle Name");
+		lbMiddleName.setBounds(36, 110, 94, 28);
+		panel.add(lbMiddleName);
+		lbMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtYear = new JTextField();
+		txtYear.setBounds(595, 159, 94, 27);
+		panel.add(txtYear);
+		txtYear.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtYear.setColumns(10);
+		
+		lbYear = new JLabel("Year");
+		lbYear.setBounds(530, 161, 65, 24);
+		panel.add(lbYear);
+		lbYear.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtMonth = new JTextField();
+		txtMonth.setBounds(426, 159, 94, 28);
+		panel.add(txtMonth);
+		txtMonth.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtMonth.setColumns(10);
+		
+		lbMonth = new JLabel("Month");
+		lbMonth.setBounds(343, 159, 77, 28);
+		panel.add(lbMonth);
+		lbMonth.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtDay = new JTextField();
+		txtDay.setBounds(231, 159, 94, 27);
+		panel.add(txtDay);
+		txtDay.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtDay.setColumns(10);
+		
+		lbDay = new JLabel("Day");
+		lbDay.setBounds(163, 159, 58, 28);
+		panel.add(lbDay);
+		lbDay.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbDate = new JLabel("Day of birth");
+		lbDate.setBounds(36, 159, 105, 28);
+		panel.add(lbDate);
+		lbDate.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbRank = new JLabel("Rank");
+		lbRank.setBounds(36, 289, 94, 28);
+		panel.add(lbRank);
+		lbRank.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbDepartment = new JLabel("Department");
+		lbDepartment.setBounds(36, 327, 105, 28);
+		panel.add(lbDepartment);
+		lbDepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbOfficeNumber = new JLabel("Office Number");
+		lbOfficeNumber.setBounds(40, 377, 116, 28);
+		panel.add(lbOfficeNumber);
+		lbOfficeNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lbOfficePhone = new JLabel("Office Phone Number");
+		lbOfficePhone.setBounds(23, 422, 172, 28);
+		panel.add(lbOfficePhone);
+		lbOfficePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		txtOfficePhone = new JTextField();
+		txtOfficePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtOfficePhone.setBounds(218, 426, 213, 27);
+		panel.add(txtOfficePhone);
+		txtOfficePhone.setColumns(10);
+		
+		txtOfficeNumber = new JTextField();
+		txtOfficeNumber.setBounds(218, 377, 213, 28);
+		panel.add(txtOfficeNumber);
+		txtOfficeNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtOfficeNumber.setColumns(10);
+		
+		txtDepartment = new JTextField();
+		txtDepartment.setBounds(218, 327, 210, 28);
+		panel.add(txtDepartment);
+		txtDepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtDepartment.setColumns(10);
+		
+	    comboBox = new JComboBox();
+		comboBox.setBounds(218, 289, 255, 29);
+		panel.add(comboBox);
+		comboBox.setBackground(Color.CYAN);
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "Assistant Professor", "Associate Professor", "Professor", "Assistant Teaching Professor", "Associate Teaching Professor", "Teaching Professor"}));
+		
+		txtMiddleName = new JTextField();
+		txtMiddleName.setBounds(218, 110, 213, 27);
+		panel.add(txtMiddleName);
+		txtMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtMiddleName.setColumns(10);
+		
+		txtFirstName = new JTextField();
+		txtFirstName.setBounds(218, 60, 213, 27);
+		panel.add(txtFirstName);
+		txtFirstName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtFirstName.setColumns(10);
+		
+		txtID = new JTextField();
+		txtID.setBounds(218, 10, 213, 27);
+		panel.add(txtID);
+		txtID.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtID.setColumns(10);
+		
+		lbHomePhone = new JLabel("Home Phone");
+		lbHomePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lbHomePhone.setBounds(36, 244, 120, 32);
+		panel.add(lbHomePhone);
+		
+		lbCellPhone = new JLabel("Cell Phone");
+		lbCellPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lbCellPhone.setBounds(36, 197, 105, 37);
+		panel.add(lbCellPhone);
+		
+		txtCellPhone = new JTextField();
+		txtCellPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtCellPhone.setBounds(218, 197, 213, 31);
+		panel.add(txtCellPhone);
+		txtCellPhone.setColumns(10);
+		
+		txtHomePhone = new JTextField();
+		txtHomePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtHomePhone.setBounds(218, 244, 213, 31);
+		panel.add(txtHomePhone);
+		txtHomePhone.setColumns(10);
+		
+		lblFamilyName = new JLabel("Family Name");
+		lblFamilyName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblFamilyName.setBounds(516, 60, 94, 28);
+		panel.add(lblFamilyName);
+		
+		txtFamilyNam = new JTextField();
+		txtFamilyNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtFamilyNam.setColumns(10);
+		txtFamilyNam.setBounds(486, 99, 213, 27);
+		panel.add(txtFamilyNam);
+		// dang ki su kien
+		txtFirstName.addMouseListener(this);
+		txtMiddleName.addMouseListener(this);
+		txtDay.addMouseListener(this);
+		txtMonth.addMouseListener(this);
+		txtYear.addMouseListener(this);
+		txtDepartment.addMouseListener(this);
+		txtOfficeNumber.addMouseListener(this);
+		txtCellPhone.addMouseListener(this);
+		txtHomePhone.addMouseListener(this);
+		txtOfficePhone.addMouseListener(this);
+		comboBox.addMouseListener(this);
+		
+		bSave.addActionListener(this);
+		bReset.addActionListener(this);
+		bFinish.addActionListener(this);
+		
+		
+		
+	}
+	// ktra chi chua ki tu thuong
+		public boolean checkString(String s){
+			for(int i=0;i<s.length();i++) {
+				if((s.charAt(i)<'A'&&s.charAt(i)!=' ')||(s.charAt(i)>'Z'&& s.charAt(i)<'a')||s.charAt(i)>'z') {
+					return false;
+				}
+			}
+			return true;
+		}
+		// ktra chi chua so
+		public boolean checkStringNumber(String s) {
+			for(int i=0;i<s.length();i++) {
+				if(s.charAt(i)<'0'||s.charAt(i)>'9') {
+					return false;
+				}}
+			return true;
+		}
+		//ktra ko chua ki tu dac biet
+		static boolean checkS(String s) {
+			for(int i=0;i<s.length();i++) {
+				if(((s.charAt(i)<'0'&&s.charAt(i)!=' ')||s.charAt(i)>'9')&&(s.charAt(i)<'A'||(s.charAt(i)>'Z'&& s.charAt(i)<'a')||s.charAt(i)>'z')) {
+					return false;
+				}}
+			return true;
+		}
+		// check textID
+		public int check(String s) {
+			if(s.equals("")) return 1;
+			else {
+				if(checkS(s)==false) return 2;
+				else return 3;
+			}
+		}
+		// check text name
+		public int check1(String s) {
+			if(s.equals("")) return 1;
+			else {
+				if(checkString(s)==false) return 2;
+				else return 3;
+			}
+		}
+		// show panel
+		public void show(JTextField a) {
+			if(check(a.getText())==1) {
+					JOptionPane.showMessageDialog(null,"enter value ");
+					a.requestFocus();}
+			if(check(a.getText())==2) {
+					JOptionPane.showMessageDialog(null,"you can't use especial characters");
+					a.requestFocus();
+			}
+		}
+		public void showName(JTextField a) {
+			if(check1(a.getText())==1) {
+					JOptionPane.showMessageDialog(null,"enter value ");
+					a.requestFocus();}
+			if(check1(a.getText())==2) {
+					JOptionPane.showMessageDialog(null,"you can't use especial characters and number");
+					a.requestFocus();
+			}
+		}
+		public void showNumber(JTextField a) {
+			if(a.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"enter value ");
+					a.requestFocus();}
+			if(checkStringNumber(a.getText())== false) {
+					JOptionPane.showMessageDialog(null,"you enter number");
+					a.requestFocus();
+			}
+		}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource()==txtFirstName) {
+			show(txtID);
+		}
+		if(e.getSource()==txtMiddleName) {
+			showName(txtFirstName);
+		} 
+		if(e.getSource()==txtDay) {
+			showName(txtMiddleName);
+		} 
+		Date d= new Date();
+		if(e.getSource()==txtMonth) {
+			
+			showNumber(txtDay);
+			
+			if(d.setDay(Integer.parseInt(txtDay.getText()))==0) {
+				JOptionPane.showMessageDialog(null,"Error");
+				txtDay.requestFocus();
+			}
+			
+		} 
+		if(e.getSource()==txtYear) {
+			showNumber(txtMonth);
+			if(d.setMonth(Integer.parseInt(txtMonth.getText()))==0) {
+				JOptionPane.showMessageDialog(null,"Error");
+				txtMonth.requestFocus();
+			}
+		} 
+		if(e.getSource()==txtCellPhone) {
+			showNumber(txtYear);
+			if(d.setYear(Integer.parseInt(txtYear.getText()))==0) {
+				JOptionPane.showMessageDialog(null,"Error");
+				txtYear.requestFocus();
+			}
+		} 
+		if(e.getSource()==txtHomePhone) {
+			showNumber(txtCellPhone);
+		} 
+		if(e.getSource()==comboBox) {
+			showNumber(txtHomePhone);
+		}
+		if(e.getSource()==txtOfficeNumber) {
+			showName(txtDepartment);
+		} 
+		if(e.getSource()==txtOfficePhone) {
+			show(txtOfficeNumber);
+		} 
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==bSave) {
+			if(txtDay.getText().equals("")) {
+				txtDay.requestFocus();
+			}
+			if(txtMonth.getText().equals("")) {
+				txtMonth.requestFocus();
+			}
+			if(txtYear.getText().equals("")) {
+				txtYear.requestFocus();
+			}
+			if(txtID.getText().equals("")) {
+				txtID.requestFocus();
+			}
+			showNumber(txtOfficePhone);
+			if(checkStringNumber(txtOfficePhone.getText())==true) {
+				people.Professor s= new people.Professor();
+				Date d= new Date();
+				
+				s.setCodeID(txtID.getText());
+				s.setFirstName(txtFirstName.getText());
+				s.setMiddleName(txtMiddleName.getText());
+				s.setFamilyName(txtFamilyName.getText());
+				d.setDay(Integer.parseInt(txtDay.getText()));
+				d.setMonth(Integer.parseInt(txtMonth.getText()));
+				d.setYear(Integer.parseInt(txtYear.getText()));
+				s.setDayOfBirth(d);
+				s.setHomePhoneNumber(txtHomePhone.getText());
+				s.setCellPhoneNumber(txtCellPhone.getText());
+				Object a=comboBox.getSelectedItem();
+				String b=(String) a;
+				s.setRank(b);
+				s.setDepartment(txtDepartment.getText());
+				s.setOfficeNumber(txtOfficeNumber.getText());
+				s.setOfficePhoneNumber(txtOfficePhone.getText());
+			
+				ReadFile r= new ReadFile();
+				
+				ArrayOfPeople p=new ArrayOfPeople(r.read(name),name);
+				p.add(s);
+				
+				WriteFile w= new WriteFile(name);
+				People peo[]=p.reArr();
+
+				try {
+					w.writeFile(peo);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				this.dispose();
+				new ReadFileGUI(name).setVisible(true);;
+			}
+		}
+		if(e.getSource()==bReset) {
+			this.dispose();
+			new ChooseProfessor(name).setVisible(true);
+		}
+		if(e.getSource()==bFinish) {
+			this.dispose();
+			new OpenChoose(name).setVisible(true);
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getSource()==txtID) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				show(txtID);
+				if(check(txtID.getText())==3) {
+					txtFirstName.requestFocus();
+				}
+			}
+			
+		}
+		if(e.getSource()==txtFirstName) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showName(txtFirstName);
+				if(check1(txtFirstName.getText())==3) {
+					txtMiddleName.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtID.requestFocus();
+			}
+			
+		}
+		if(e.getSource()==txtMiddleName) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showName(txtMiddleName);
+				if(check1(txtMiddleName.getText())==3) {
+					txtDay.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtFirstName.requestFocus();
+			}
+		}
+		Date d= new Date();
+		if(e.getSource()==txtDay) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtDay);
+				if(checkStringNumber(txtDay.getText())==true) {
+					if(d.setDay(Integer.parseInt(txtDay.getText()))==0) {
+						JOptionPane.showMessageDialog(null,"Error");
+						txtDay.requestFocus();
+					}else
+					 txtMonth.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtMiddleName.requestFocus();
+			}
+		}
+		if(e.getSource()==txtMonth) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtMonth);
+				if(checkStringNumber(txtMonth.getText())==true) {
+					if(d.setMonth(Integer.parseInt(txtMonth.getText()))==0) {
+						JOptionPane.showMessageDialog(null,"Error");
+						txtMonth.requestFocus();
+					}else
+					 txtYear.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtDay.requestFocus();
+			}
+		}
+		if(e.getSource()==txtYear) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtYear);
+				
+				if(checkStringNumber(txtYear.getText())==true) {
+					if(d.setMonth(Integer.parseInt(txtMonth.getText()))==0) {
+						JOptionPane.showMessageDialog(null,"Error");
+						txtYear.requestFocus();
+					}else
+					 txtCellPhone.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtMonth.requestFocus();
+			}
+		}
+		if(e.getSource()==txtCellPhone) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtCellPhone);
+				if(checkStringNumber(txtCellPhone.getText())==true) {
+					txtHomePhone.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtYear.requestFocus();
+			}
+		}
+		if(e.getSource()==txtHomePhone) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtHomePhone);
+				if(checkStringNumber(txtHomePhone.getText())==true) {
+					comboBox.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtCellPhone.requestFocus();
+			}
+		}
+		if(e.getSource()==comboBox) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				txtDepartment.requestFocus();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtHomePhone.requestFocus();
+			}
+		}
+		if(e.getSource()==txtDepartment) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showName(txtDepartment);
+				if(check1(txtDepartment.getText())==3) {
+					txtOfficeNumber.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				comboBox.requestFocus();
+			}
+		}
+		if(e.getSource()==txtOfficeNumber) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				show(txtOfficeNumber);
+				if(check(txtOfficeNumber.getText())==3) {
+					txtOfficePhone.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtDepartment.requestFocus();
+			}
+		}
+		if(e.getSource()==txtOfficePhone) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER ||e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				showNumber(txtOfficePhone);
+				if(checkStringNumber(txtOfficePhone.getText())==true) {
+					bSave.requestFocus();
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				txtOfficeNumber.requestFocus();
+			}
+		}
+		if(e.getSource()==bSave) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+				if(txtDay.getText().equals("")) {
+					txtDay.requestFocus();
+				}
+				if(txtMonth.getText().equals("")) {
+					txtMonth.requestFocus();
+				}
+				if(txtYear.getText().equals("")) {
+					txtYear.requestFocus();
+				}
+				if(txtID.getText().equals("")) {
+					txtID.requestFocus();
+				}
+					people.Professor s= new people.Professor();
+					Date da= new Date();
+					
+					s.setCodeID(txtID.getText());
+					s.setFirstName(txtFirstName.getText());
+					s.setLastName(txtMiddleName.getText());
+					da.setDay(Integer.parseInt(txtDay.getText()));
+					da.setMonth(Integer.parseInt(txtMonth.getText()));
+					da.setYear(Integer.parseInt(txtYear.getText()));
+					s.setDayOfBirth(da);
+					s.setHomePhoneNumber(txtHomePhone.getText());
+					s.setCellPhoneNumber(txtCellPhone.getText());
+					Object a=comboBox.getSelectedItem();
+					String b=(String) a;
+					s.setRank(b);
+					s.setDepartment(txtDepartment.getText());
+					s.setOfficeNumber(txtOfficeNumber.getText());
+					s.setOfficePhoneNumber(txtOfficePhone.getText());
+				
+					
+					ReadFile r= new ReadFile();
+					
+					ArrayOfPeople1 p=new ArrayOfPeople1(r.read(name),name);
+					p.add(s);
+					
+
+					
+					WriteFile w= new WriteFile(name);
+					People peo[]=p.reArr();
+
+					try {
+						w.writeFile(peo);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					this.dispose();
+					new ReadFileGUI(name).setVisible(true);;
+				}
+			if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				bReset.requestFocus();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_LEFT||e.getKeyCode()==KeyEvent.VK_UP) {
+				txtOfficePhone.requestFocus();
+			}
+		}
+		if(e.getSource()==bReset) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+				this.dispose();
+				new ChooseProfessor(name).setVisible(true);
+			}
+			if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				bFinish.requestFocus();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_LEFT||e.getKeyCode()==KeyEvent.VK_UP) {
+				bSave.requestFocus();
+			}
+		}
+		if(e.getSource()==bFinish) {
+			if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+				this.dispose();
+				new ReadFileGUI(name).setVisible(true);
+			}
+			if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				txtID.requestFocus();
+			}
+			if(e.getKeyCode()==KeyEvent.VK_LEFT||e.getKeyCode()==KeyEvent.VK_UP) {
+				bReset.requestFocus();
+			}
+		}
+
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+}
+

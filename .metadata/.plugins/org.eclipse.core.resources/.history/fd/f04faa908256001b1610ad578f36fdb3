@@ -1,0 +1,76 @@
+package people;
+import java.util.Scanner;
+public class Student extends People {
+	private String	degreeprogram;
+	private String standing;
+	private int expectedGraduationYear;
+
+	public String getDegreeProgram() {
+		return this.degreeprogram;
+	}
+
+	public void setDegreeProgram(String degreeprogram) {
+		this.degreeprogram = degreeprogram;
+	}
+
+	public String getStanding() {
+		return this.standing;
+	}
+
+	public void setStanding(String standing) {
+		this.standing = standing;
+	}
+
+	public int getExpectedGraduationYear() {
+		return expectedGraduationYear;
+	}
+
+	public void setExpectedGraduationYear(int expectedGraduationYear) {
+
+		this.expectedGraduationYear = expectedGraduationYear;
+	}
+
+	public Student() {
+		super();
+		this.standing=null;
+		this.degreeprogram= null;
+		this.expectedGraduationYear=0;
+	}
+
+	public Student(String codeID, String firstName, String middleName,String familyName, Date dayOfBirth, String homePhoneNumber,
+			String cellPhoneNumber,String degreeprogram, String standing, int expectedGraduationYear) {
+		super(codeID,firstName,middleName,familyName,dayOfBirth,homePhoneNumber,cellPhoneNumber);
+		this.degreeprogram = degreeprogram;
+		this.standing = standing;
+		this.expectedGraduationYear = expectedGraduationYear;
+	}
+	public void input() {
+		super.input();
+		Scanner kb=new Scanner(System.in);
+		System.out.println("Enter Degree program to which student belongs: ");
+		this.degreeprogram=kb.nextLine();
+		setDegreeProgram(degreeprogram);
+		System.out.println("Standing\n");
+		System.out.println("Enter\n0-None\r\n" + "1-Freshman\r\n" + "2-Sophomore\r\n" + "3-Junior\r\n" + 
+				"4-Senior\r\n" + "5-Graduate\r\n" + "6-Masters Postgraduate\r\n" + "7-PhD Postgraduate\r\n"  
+				);
+		this.standing=kb.nextLine();
+		
+		System.out.println("Enter Expected Graduation Year: ");
+		this.expectedGraduationYear=kb.nextInt();
+		setExpectedGraduationYear(expectedGraduationYear);
+	}
+	public String toString() {
+		return "Student \n codeID : " + codeID + "\n firstName : " + firstName + "\n Middle Name : " + middleName + "\n Family Name : " + familyName
+				+ "\n dayOfBirth : " + dayOfBirth + "\n homePhoneNumber : " + homePhoneNumber + "\n cellPhoneNumber : "
+				+ cellPhoneNumber + "\nprogram : " + degreeprogram + "\n standing : " + standing + "\n expectedGraduationYear : "
+				+ expectedGraduationYear ;
+	}
+	public static void main(String[] args) {
+		Date d= new Date(2,2,2001);
+		 Student p=new  Student("00","a","b", "c",d,"001","002","a","b",2001);
+		 p.input();
+		System.out.println( p.toString());
+
+	}
+}

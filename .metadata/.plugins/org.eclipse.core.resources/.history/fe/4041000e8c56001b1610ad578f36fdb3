@@ -1,0 +1,276 @@
+package swing;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import controller.ArrayOfPeople;
+
+import processfile.ReadFile;
+import processfile.WriteFile;
+import people.People;
+import people.Professor;
+import people.Student;
+
+import javax.swing.JTable;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+
+public class ListOfPeople extends JFrame implements ActionListener{
+
+	private JPanel contentPane;
+	private JTable table;
+	private JButton bAdd;
+	private JButton bDelet;
+	private JButton bBack;
+	private JButton bFind;
+	private JButton bCount;
+	private JButton bSort;
+	static String  name;
+	
+	public static void main(String[] args) {
+		ListOfPeople frame = new ListOfPeople(name);
+		frame.setVisible(true);
+	}
+
+
+	
+	public ListOfPeople( String namefile) {
+		name=namefile;
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1353, 660);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		table = new JTable();
+		table.setBounds(10, 25, 1304, 526);
+		contentPane.add(table);
+		DefaultTableModel defaulttable= new DefaultTableModel();
+
+		table.setModel( defaulttable);
+		defaulttable.setColumnCount(14);
+		
+		ReadFile r= new ReadFile();
+		People p[]=r.read(name);
+		
+		int row=r.countObject(name)+1;
+		defaulttable.setRowCount(row);
+		table.setValueAt("ID", 0, 0);
+		table.setValueAt("First Name", 0, 1);
+		table.setValueAt("Middle Name", 0, 2);
+		table.setValueAt("Family Name", 0, 3);
+		table.setValueAt("Day of Birth", 0, 4);
+		table.setValueAt("Home Phone", 0, 5);
+		table.setValueAt("Cell Phone", 0, 6);
+		table.setValueAt("Rank", 0, 7);
+		table.setValueAt("Derpartment", 0, 8);
+		table.setValueAt("Office Number", 0, 9);
+		table.setValueAt("Office Phone", 0, 10);
+		table.setValueAt("Standing", 0, 11);
+		table.setValueAt("Dergree Program", 0, 12);
+		table.setValueAt("GraduationYear", 0, 13);
+		
+
+		for(int i=0;i<p.length;i++) {
+			if(p[i] instanceof People) {
+				People s= (People) p[i];
+				table.setValueAt(s.getCodeID(), i+1, 0);
+				table.setValueAt(s.getFirstName(), i+1, 1);
+				table.setValueAt(s.getMiddleName(), i+1, 2);
+				table.setValueAt(s.getFamilyName(), i+1, 3);
+				table.setValueAt(s.getDayOfBirth(),i+1, 4);
+				table.setValueAt(s.getHomePhoneNumber(),i+1, 5);
+				table.setValueAt(s.getCellPhoneNumber(),i+1, 6);
+				
+				
+			}
+			if(p[i] instanceof Student) {
+				Student s= (Student) p[i];
+				table.setValueAt(s.getCodeID(), i+1, 0);
+				table.setValueAt(s.getFirstName(), i+1, 1);
+				table.setValueAt(s.getMiddleName(), i+1, 2);
+				table.setValueAt(s.getFamilyName(), i+1, 3);
+				table.setValueAt(s.getDayOfBirth(),i+1, 4);
+				table.setValueAt(s.getHomePhoneNumber(),i+1, 5);
+				table.setValueAt(s.getCellPhoneNumber(),i+1, 6);
+				table.setValueAt(s.getStanding(),i+1, 11);
+				table.setValueAt(s.getDegreeProgram(),i+1, 12);
+				table.setValueAt(s.getExpectedGraduationYear(),i+1, 13);
+				
+			}
+			
+			if(p[i] instanceof Professor) {
+				Professor s= (Professor) p[i];
+				table.setValueAt(s.getCodeID(), i+1, 0);
+				table.setValueAt(s.getFirstName(), i+1, 1);
+				table.setValueAt(s.getMiddleName(), i+1, 2);
+				table.setValueAt(s.getFamilyName(), i+1, 3);
+				table.setValueAt(s.getDayOfBirth(),i+1, 4);
+				table.setValueAt(s.getHomePhoneNumber(),i+1, 5);
+				table.setValueAt(s.getCellPhoneNumber(),i+1, 6);
+				table.setValueAt(s.getRank(),i+1, 7);
+				table.setValueAt(s.getDepartment(),i+1, 8);
+				table.setValueAt(s.getOfficeNumber(),i+1, 9);
+				table.setValueAt(s.getOfficePhoneNumber(),i+1, 10);
+			}
+
+		}
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(183, 573, 1039, 40);
+		contentPane.add(panel);
+		
+		bAdd = new JButton("Add");
+		bAdd.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bAdd);
+		bAdd.requestFocus();
+		
+		bDelet = new JButton("Delete");
+		bDelet.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bDelet);
+		
+		bFind = new JButton("Find");
+		bFind.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bFind);
+		
+		bCount = new JButton("Count");
+		bCount.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bCount);
+		
+		bSort = new JButton("Sort");
+		bSort.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bSort);
+		
+		bBack = new JButton("Back");
+		bBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panel.add(bBack);
+		bAdd.addActionListener(this);
+		bFind.addActionListener(this);
+		bCount.addActionListener(this);
+		bDelet.addActionListener(this);
+		bSort.addActionListener(this);
+		bBack.addActionListener(this);
+		
+		
+		bAdd.requestFocus();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==bAdd) {
+			
+			this.dispose();
+			new swing.Choose(name).setVisible(true);
+			
+		}
+		if(e.getSource()==bFind) {
+			ReadFile r= new ReadFile();
+			People p[]=r.read(name);
+			String x= JOptionPane.showInputDialog(null, "Enter ID: ");
+			try {
+				if(!x.equals("")) {
+					ArrayOfPeople a= new ArrayOfPeople(p, name);
+					People []f=a.find(x);
+					System.out.println(f.length);
+					if(f.length==0) {
+						JOptionPane.showMessageDialog(null, "Not find! ");
+					}
+					else {
+						WriteFile w= new WriteFile("filefind.txt");
+						try {
+							w.writeFile(f);
+						} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						this.dispose();
+						new ListOfPeople("filefind.txt").setVisible(true);
+					}
+					
+				}
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			
+		}
+//		if(e.getSource()==bCount) {
+//			ReadFile r= new ReadFile();
+//			People p[]=r.read(name);
+//			ArrayOfPeople a= new ArrayOfPeople(p, name);
+//			JOptionPane.showMessageDialog(null, a.count());
+//		}
+		if(e.getSource()==bSort) {
+			ReadFile r= new ReadFile();
+			People p[]=r.read(name);
+			ArrayOfPeople ar= new ArrayOfPeople(p, name);
+			People []f=ar.sort();
+			WriteFile w= new WriteFile(name);
+			try {
+				w.writeFile(f);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			this.dispose();
+			new ListOfPeople(name).setVisible(true);
+		}
+		if(e.getSource()==bDelet) {
+			ReadFile r= new ReadFile();
+			People p[]=r.read(name);
+			
+			String x= JOptionPane.showInputDialog(null, "Enter ID: ");
+			try {
+				if(!x.equals("")) {
+					ArrayOfPeople a= new ArrayOfPeople(p, name);
+
+					int c=0;
+					for(int i=0;i<p.length;i++) {
+						if(p[i].getCodeID().equalsIgnoreCase(x)){
+							c++;
+						}
+					}
+					if(c==0) {
+						JOptionPane.showMessageDialog(null, "Not find");
+					}
+					else {
+						WriteFile w= new WriteFile(name);
+						try {
+							w.writeFile(a.remove(x));
+						} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						this.dispose();
+						new ListOfPeople(name).setVisible(true);
+					}
+					}
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+				System.out.println();
+			}
+			
+		}
+		if(e.getSource()==bBack) {
+			this.dispose();
+			new Welcome().setVisible(true);
+		}
+		
+	}
+
+
+
+}
+

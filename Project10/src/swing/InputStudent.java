@@ -1,0 +1,294 @@
+package swing;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controller.ArrayOfPeople;
+import processfile.ReadFile;
+import processfile.WriteFile;
+import people.Date;
+import people.People;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.awt.event.ActionEvent;
+
+public class InputStudent extends JFrame implements ActionListener{
+
+	private JPanel contentPane;
+	private JLabel lbStudent,lbID,lbFirstName,lbMiddleName,lbDate,lnStand,lbCellPhone,lbHomePhone,
+	lbPrograme,lbGraduationYear;
+	private JTextField tfCodeID,tfFirstName,tfMiddleName,tfDay, tfMonth, tfYear,tfCellPhone,tfProgram,tfHomePhone,tfGraduationYear;
+	private JButton bSave, bBack,bReset;
+	private JPanel pButton, panel;
+	private JComboBox comboBox;
+	static String name;
+	private JTextField tfFamilyNam;
+	private JLabel lblNewLabel;
+	
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InputStudent frame = new InputStudent(name);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public InputStudent(String namef) {
+		name = namef;
+		super.setTitle("Input Information Student");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 750, 607);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		lbStudent = new JLabel("Input Information For Student");
+		lbStudent.setForeground(Color.BLUE);
+		lbStudent.setBounds(232, 0, 266, 42);
+		lbStudent.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		contentPane.add(lbStudent);
+		
+		bSave = new JButton("SAVE");
+		bSave.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bSave.setBounds(452, 28, 92, 31);
+		
+		bBack = new JButton("BACK");
+		bBack.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bBack.setBounds(58, 28, 84, 31);
+		
+		pButton = new JPanel();
+		pButton.setBounds(60, 501, 589, 69);
+		pButton.setLayout(null);
+		pButton.add(bSave);
+		pButton.add(bBack);
+		contentPane.add(pButton);
+		
+		bReset = new JButton("RESET");
+		bReset.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bReset.setBounds(255, 28, 92, 31);
+		pButton.add(bReset);
+		
+		panel = new JPanel();
+		panel.setBounds(10, 35, 699, 460);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		lbID = new JLabel("Code ID :");
+		lbID.setBounds(36, 10, 94, 28);
+		panel.add(lbID);
+		lbID.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbFirstName = new JLabel("First Name :");
+		lbFirstName.setBounds(36, 60, 149, 28);
+		panel.add(lbFirstName);
+		lbFirstName.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbMiddleName = new JLabel("Middle Name :");
+		lbMiddleName.setBounds(36, 110, 172, 28);
+		panel.add(lbMiddleName);
+		lbMiddleName.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		tfYear = new JTextField();
+		tfYear.setBounds(470, 186, 94, 27);
+		panel.add(tfYear);
+		tfYear.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfYear.setColumns(10);
+		
+		tfMonth = new JTextField();
+		tfMonth.setBounds(366, 186, 94, 28);
+		panel.add(tfMonth);
+		tfMonth.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfMonth.setColumns(10);
+		
+		tfDay = new JTextField();
+		tfDay.setBounds(262, 186, 94, 27);
+		panel.add(tfDay);
+		tfDay.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfDay.setColumns(10);
+		
+		lbDate = new JLabel("Birth Day :");
+		lbDate.setBounds(36, 186, 105, 28);
+		panel.add(lbDate);
+		lbDate.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lnStand = new JLabel("Standing :");
+		lnStand.setBounds(36, 316, 94, 28);
+		panel.add(lnStand);
+		lnStand.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbPrograme = new JLabel("Degree Program :");
+		lbPrograme.setBounds(36, 371, 300, 28);
+		panel.add(lbPrograme);
+		lbPrograme.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbGraduationYear = new JLabel("Expected Graduation Year :");
+		lbGraduationYear.setBounds(36, 421, 300, 28);
+		panel.add(lbGraduationYear);
+		lbGraduationYear.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		tfGraduationYear = new JTextField();
+		tfGraduationYear.setBounds(262, 421, 213, 28);
+		panel.add(tfGraduationYear);
+		tfGraduationYear.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfGraduationYear.setColumns(10);
+		
+		tfProgram = new JTextField();
+		tfProgram.setBounds(265, 370, 210, 28);
+		panel.add(tfProgram);
+		tfProgram.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfProgram.setColumns(10);
+		
+		comboBox = new JComboBox();
+		comboBox.setBounds(262, 316, 255, 29);
+		panel.add(comboBox);
+		comboBox.setBackground(Color.GREEN);
+		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "Freshman","Sophomore","Junior",
+				"Senior","Masters Postgraduate","PhD Postgraduate"}));
+		
+		
+		tfMiddleName = new JTextField();
+		tfMiddleName.setBounds(262, 109, 213, 27);
+		panel.add(tfMiddleName);
+		tfMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfMiddleName.setColumns(10);
+		
+		tfFirstName = new JTextField();
+		tfFirstName.setBounds(262, 59, 213, 27);
+		panel.add(tfFirstName);
+		tfFirstName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfFirstName.setColumns(10);
+		
+		tfCodeID = new JTextField();
+		tfCodeID.setBounds(262, 9, 213, 27);
+		panel.add(tfCodeID);
+		tfCodeID.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfCodeID.setColumns(10);
+		
+		lbHomePhone = new JLabel("Home Phone Number :");
+		lbHomePhone.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbHomePhone.setBounds(36, 273, 237, 32);
+		panel.add(lbHomePhone);
+		
+		lbCellPhone = new JLabel("Cell Phone Number :");
+		lbCellPhone.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbCellPhone.setBounds(36, 225, 227, 37);
+		panel.add(lbCellPhone);
+		
+		tfCellPhone = new JTextField();
+		tfCellPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfCellPhone.setBounds(262, 224, 213, 31);
+		panel.add(tfCellPhone);
+		tfCellPhone.setColumns(10);
+		
+		tfHomePhone = new JTextField();
+		tfHomePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfHomePhone.setBounds(262, 274, 213, 29);
+		panel.add(tfHomePhone);
+		tfHomePhone.setColumns(10);
+		
+		JLabel lbFamilyNam = new JLabel("Family Name :");
+		lbFamilyNam.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbFamilyNam.setBounds(36, 149, 149, 28);
+		panel.add(lbFamilyNam);
+		
+		tfFamilyNam = new JTextField();
+		tfFamilyNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfFamilyNam.setColumns(10);
+		tfFamilyNam.setBounds(262, 148, 213, 27);
+		panel.add(tfFamilyNam);
+		
+		lblNewLabel = new JLabel("DD/MM/YYYY");
+		lblNewLabel.setBounds(574, 186, 72, 24);
+		panel.add(lblNewLabel);
+				
+		bSave.addActionListener(this);
+		bReset.addActionListener(this);
+		bBack.addActionListener(this);
+		
+		
+		
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==bSave) {
+			
+			
+				people.Student s= new people.Student();
+				Date d= new Date();
+				
+				s.setCodeID(tfCodeID.getText());
+				s.setFirstName(tfFirstName.getText());
+				s.setMiddleName(tfMiddleName.getText());
+				s.setFamilyName(tfFamilyNam.getText());
+				d.setDay(Integer.parseInt(tfDay.getText()));
+				d.setMonth(Integer.parseInt(tfMonth.getText()));
+				d.setYear(Integer.parseInt(tfYear.getText()));
+				s.setDayOfBirth(d);
+				s.setHomePhoneNumber(tfHomePhone.getText());
+				s.setCellPhoneNumber(tfCellPhone.getText());
+				Object a=comboBox.getSelectedItem();
+				String b=(String) a;
+				s.setStanding(b);
+				s.setDegreeProgram(tfProgram.getText());
+				s.setExpectedGraduationYear(Integer.parseInt(tfGraduationYear.getText()));
+			
+				
+				ReadFile r= new ReadFile();
+				
+				ArrayOfPeople p=new ArrayOfPeople(r.read(name),name);
+				p.add(s);
+				
+
+				
+				WriteFile w= new WriteFile(name);
+				People peo[]=p.returnNewArray();
+
+				try {
+					w.writeFile(peo);
+				} catch (FileNotFoundException e1) {e1.printStackTrace();}
+				
+				this.dispose();
+				new ListOfPeople(name).setVisible(true);;
+		
+		}
+		if(e.getSource()==bReset) {
+			this.dispose();
+			new InputStudent(name).setVisible(true);
+		}
+		if(e.getSource()==bBack) {
+			this.dispose();
+			new Choose(name).setVisible(true);
+		}
+	}
+	
+}
+

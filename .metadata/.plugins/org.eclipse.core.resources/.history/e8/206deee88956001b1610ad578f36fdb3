@@ -1,0 +1,159 @@
+package processfile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+import controller.ArrayOfPeople;
+import people.Date;
+
+
+import people.People;
+import people.Professor;
+import people.Student;
+public class ReadFile {
+		public People[] read(String nameFile) {
+		int number=this.countObject(nameFile);
+		People p[]= new People[number];
+		int i=0;
+		try {
+			Scanner kb1= new Scanner(new File(nameFile));
+			while(kb1.hasNext()) {
+				
+				String a= kb1.next();
+	//			System.out.println("choose"+a);
+				if(a.equals("Student")) { // 1 la student
+					Student s= new Student();
+					kb1.nextLine();
+					s.setCodeID(kb1.nextLine() );
+					s.setFirstName(kb1.nextLine());
+					s.setMiddleName(kb1.nextLine());
+					s.setFamilyName(kb1.nextLine());
+					Date d=this.returnDate(kb1.nextLine());
+					
+					s.setDayOfBirth(d);
+					
+					s.setHomePhoneNumber(kb1.nextLine());
+					
+					s.setCellPhoneNumber(kb1.nextLine());
+					
+					s.setProgram(kb1.nextLine());
+					
+					s.setStanding(kb1.nextLine());
+					
+					s.setExpectedGraduationYear(Integer.parseInt(kb1.nextLine()));
+					
+					p[i]=s;
+					
+					i++;
+
+					
+					
+				}
+				if(a.equals("Professor")) { // 2 la professor
+					Professor s= new Professor();
+					kb1.nextLine();
+					s.setCodeID( kb1.nextLine() );
+					s.setFirstName(kb1.nextLine());
+					s.setLastName(kb1.nextLine());
+					Date d=this.cut(kb1.nextLine());
+					s.setDayOfBirth(d);
+					s.setHomePhoneNumber(kb1.nextLine());
+					s.setCellPhoneNumber(kb1.nextLine());
+					s.setRank(kb1.nextLine());
+					s.setDepartment(kb1.nextLine());
+					s.setOfficeNumber(kb1.nextLine());
+					s.setOfficePhoneNumber(kb1.nextLine());
+					
+					p[i]=s;
+					i++;
+					
+				}
+		
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return p;
+	}
+		public int  countObject(String n) {
+			int i=0;
+				try {
+					
+					Scanner kb1= new Scanner(new File(n));
+					while(kb1.hasNext()) {
+						
+						String a= kb1.next();
+						if(a.equals("Student")) { // 1 la student
+	//
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							i++;
+
+							
+							
+						}
+						if(a.equals("Professor")) { // 2 la professor
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							kb1.nextLine();
+							
+							
+							i++;
+							
+						}
+						
+//						if(a==0) { // 2 la professor
+//							
+//							kb1.nextLine();
+//							kb1.nextLine();
+//							kb1.nextLine();
+//							kb1.nextLine();
+//							kb1.nextLine();
+//							kb1.nextLine();
+//							kb1.nextLine();
+							
+							
+							
+		//					i++;
+							
+		//				}
+						
+						
+				
+					}
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return i;
+//			
+			
+		}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

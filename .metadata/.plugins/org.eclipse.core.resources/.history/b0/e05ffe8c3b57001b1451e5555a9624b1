@@ -1,0 +1,354 @@
+package swing;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controller.ArrayOfPeople;
+import processfile.ReadFile;
+import processfile.WriteFile;
+import people.Date;
+import people.People;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.awt.event.ActionEvent;
+
+public class InputPeople extends JFrame implements MouseListener,ActionListener{
+
+	private JPanel contentPane;
+	private JLabel lbStudent,lbID,lbFName,lbMiddleName,lbDate,lbCellPhone,lbHomePhone;
+	private JTextField txtID,txtFirstName,txtMiddleName,txtDay, txtMonth, txtYear,txtCellPhone,txtHomePhone;
+	private JButton bContinue, bFinish,bClear;
+	private JPanel pButton, panel;
+	static String name;
+	private JTextField txtFamilyNam;
+	private JLabel lblNewLabel;
+	
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InputPeople frame = new InputPeople(name);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public InputPeople(String namef) {
+		name = namef;
+		super.setTitle("Input Information People");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 750, 607);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		lbStudent = new JLabel("Input Information For People");
+		lbStudent.setForeground(Color.BLUE);
+		lbStudent.setBounds(232, 0, 284, 42);
+		lbStudent.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		contentPane.add(lbStudent);
+		
+		bContinue = new JButton("CONTINUE");
+		bContinue.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bContinue.setBounds(423, 28, 134, 31);
+		
+		bFinish = new JButton("BACK");
+		bFinish.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bFinish.setBounds(35, 28, 122, 31);
+		
+		pButton = new JPanel();
+		pButton.setBounds(60, 501, 589, 69);
+		pButton.setLayout(null);
+		pButton.add(bContinue);
+		pButton.add(bFinish);
+		contentPane.add(pButton);
+		
+		bClear = new JButton("CLEAR");
+		bClear.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		bClear.setBounds(217, 28, 129, 31);
+		pButton.add(bClear);
+		
+		panel = new JPanel();
+		panel.setBounds(10, 35, 699, 460);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		lbID = new JLabel("Code ID :");
+		lbID.setBounds(36, 10, 94, 28);
+		panel.add(lbID);
+		lbID.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbFName = new JLabel("First Name :");
+		lbFName.setBounds(36, 60, 105, 28);
+		panel.add(lbFName);
+		lbFName.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		lbMiddleName = new JLabel("Middle Name :");
+		lbMiddleName.setBounds(36, 110, 120, 28);
+		panel.add(lbMiddleName);
+		lbMiddleName.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		txtYear = new JTextField();
+		txtYear.setBounds(422, 212, 94, 27);
+		panel.add(txtYear);
+		txtYear.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtYear.setColumns(10);
+		
+		txtMonth = new JTextField();
+		txtMonth.setBounds(322, 212, 94, 28);
+		panel.add(txtMonth);
+		txtMonth.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtMonth.setColumns(10);
+		
+		txtDay = new JTextField();
+		txtDay.setBounds(218, 212, 94, 27);
+		panel.add(txtDay);
+		txtDay.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtDay.setColumns(10);
+		
+		lbDate = new JLabel("Birth Day :");
+		lbDate.setBounds(36, 212, 105, 28);
+		panel.add(lbDate);
+		lbDate.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		
+		
+		txtMiddleName = new JTextField();
+		txtMiddleName.setBounds(218, 110, 213, 27);
+		panel.add(txtMiddleName);
+		txtMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtMiddleName.setColumns(10);
+		
+		txtFirstName = new JTextField();
+		txtFirstName.setBounds(218, 60, 213, 27);
+		panel.add(txtFirstName);
+		txtFirstName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtFirstName.setColumns(10);
+		
+		txtID = new JTextField();
+		txtID.setBounds(218, 10, 213, 27);
+		panel.add(txtID);
+		txtID.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtID.setColumns(10);
+		
+		lbHomePhone = new JLabel("Home Phone Number :");
+		lbHomePhone.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbHomePhone.setBounds(36, 312, 172, 32);
+		panel.add(lbHomePhone);
+		
+		lbCellPhone = new JLabel("Cell Phone Number :");
+		lbCellPhone.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbCellPhone.setBounds(36, 261, 172, 37);
+		panel.add(lbCellPhone);
+		
+		txtCellPhone = new JTextField();
+		txtCellPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtCellPhone.setBounds(218, 264, 213, 31);
+		panel.add(txtCellPhone);
+		txtCellPhone.setColumns(10);
+		
+		txtHomePhone = new JTextField();
+		txtHomePhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtHomePhone.setBounds(218, 315, 213, 29);
+		panel.add(txtHomePhone);
+		txtHomePhone.setColumns(10);
+		
+		JLabel lbFamilyNam = new JLabel("Family Name :");
+		lbFamilyNam.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lbFamilyNam.setBounds(36, 159, 120, 28);
+		panel.add(lbFamilyNam);
+		
+		txtFamilyNam = new JTextField();
+		txtFamilyNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtFamilyNam.setColumns(10);
+		txtFamilyNam.setBounds(218, 160, 213, 27);
+		panel.add(txtFamilyNam);
+		
+		lblNewLabel = new JLabel("DD/MM/YYYY");
+		lblNewLabel.setBounds(526, 212, 94, 24);
+		panel.add(lblNewLabel);
+		// dang ki su kien
+		txtFirstName.addMouseListener(this);
+		txtMiddleName.addMouseListener(this);
+		txtDay.addMouseListener(this);
+		txtMonth.addMouseListener(this);
+		txtYear.addMouseListener(this);
+		txtHomePhone.addMouseListener(this);
+		txtCellPhone.addMouseListener(this);
+		
+		bContinue.addActionListener(this);
+		bClear.addActionListener(this);
+		bFinish.addActionListener(this);
+		
+		
+		
+	}
+	// ktra chi chua ki tu thuong
+	public boolean checkString(String s){
+//		for(int i=0;i<s.length();i++) {
+//			if((s.charAt(i)<'A'&&s.charAt(i)!=' ')||(s.charAt(i)>'Z'&& s.charAt(i)<'a')||s.charAt(i)>'z') {
+//				return false;
+//			}
+//		}
+		return true;
+	}
+	// ktra chi chua so
+	public boolean checkStringNumber(String s) {
+		for(int i=0;i<s.length();i++) {
+			if(s.charAt(i)<'0'||s.charAt(i)>'9') {
+				return false;
+			}}
+		return true;
+	}
+	//ktra ko chua ki tu dac biet
+	static boolean checkS(String s) {
+		for(int i=0;i<s.length();i++) {
+			if((s.charAt(i)<'0'||s.charAt(i)>'9')&&(s.charAt(i)<'A'||(s.charAt(i)>'Z'&& s.charAt(i)<'a')||s.charAt(i)>'z')) {
+				return false;
+			}}
+		return true;
+	}
+	// check textID
+	public int check(String s) {
+		if(s.equals("")) return 1;
+		else {
+			if(checkS(s)==false) return 2;
+			else return 3;
+		}
+	}
+	// check text name
+	public int check1(String s) {
+		if(s.equals("")) return 1;
+		else {
+			if(checkString(s)==false) return 2;
+			else return 3;
+		}
+	}
+	// show panel
+	public void show(JTextField a) {
+		if(check(a.getText())==1) {
+				JOptionPane.showMessageDialog(null,"enter value ");
+				a.requestFocus();}
+		if(check(a.getText())==2) {
+				JOptionPane.showMessageDialog(null,"you can't use especial characters");
+				a.requestFocus();
+		}
+	}
+	public void showNumber(JTextField a) {
+		if(a.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,"enter value ");
+				a.requestFocus();}
+		if(checkStringNumber(a.getText())== false) {
+				JOptionPane.showMessageDialog(null,"you enter number");
+				a.requestFocus();
+		}
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource()==txtFirstName) {
+			show(txtID);
+		}
+		Date d= new Date();
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==bContinue) {
+			if(txtDay.getText().equals("")) {
+				txtDay.requestFocus();
+			}
+			if(txtMonth.getText().equals("")) {
+				txtMonth.requestFocus();
+			}
+			if(txtYear.getText().equals("")) {
+				txtYear.requestFocus();
+			}
+			if(txtID.getText().equals("")) {
+				txtID.requestFocus();
+			}
+		//	showNumber(txtGraduationYear);
+			//if(check(txtGraduationYear.getText())==3) {
+				people.People s= new people.People();
+				Date d= new Date();
+				
+				s.setCodeID(txtID.getText());
+				s.setFirstName(txtFirstName.getText());
+				s.setMiddleName(txtMiddleName.getText());
+				s.setFamilyName(txtFamilyNam.getText());
+				d.setDay(Integer.parseInt(txtDay.getText()));
+				d.setMonth(Integer.parseInt(txtMonth.getText()));
+				d.setYear(Integer.parseInt(txtYear.getText()));
+				s.setDayOfBirth(d);
+				s.setHomePhoneNumber(txtHomePhone.getText());
+				s.setCellPhoneNumber(txtCellPhone.getText());
+				
+			
+				
+				ReadFile r= new ReadFile();
+				
+				ArrayOfPeople p=new ArrayOfPeople(r.read(name),name);
+				p.add(s);
+				
+
+				
+				WriteFile w= new WriteFile(name);
+				People peo[]=p.returnNewArray();
+
+				try {
+					w.writeFile(peo);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				this.dispose();
+				new ListOfPeople(name).setVisible(true);;
+			
+		}
+		if(e.getSource()==bClear) {
+			this.dispose();
+			new InputPeople(name).setVisible(true);
+		}
+		if(e.getSource()==bFinish) {
+			this.dispose();
+			new Choose(name).setVisible(true);
+		}
+	}
+	
+}
